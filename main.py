@@ -100,7 +100,9 @@ async def main(generate_random_reward_address, address_to_get_reward):
             pass
 
 
+#
 # ИЗМЕНИТЕ ПОД ВАШИ НАСТРОЙКИ:
+# 
 num_elements = 20  # Количество элементов для выбора
 generate_random_reward_address = 1 # 1 - генерировать рандомный адрес, для получения ревардов, 0 - вы сами напишите адрес в address_to_get_reward
 address_to_get_reward = "0x..." # адрес для получения ревардов
@@ -117,13 +119,12 @@ Wallets were created simultaneously on the Arbitrum network, funded with identic
 3. Clusters that pass the previous checks are then checked for the number of transactions. If the wallets have an identical number of transactions on the Arbitrum network (with a margin of error of 3-5 transactions), they are placed in a cluster.
 4. The final step is to determine the date of the last transaction on the Arbitrum network. If all wallets in the cluster have the same creation date, the same initial funding amount, the same number of transactions, and the same date of the last transaction, we obtain the final cluster.
 '''
-# Тут вы пишите свой или юзаете мой шаблон, чтобы чат гпт нормально сгенерировал ответ и поменял ответ у текст выше
+# Тут вы дополнительно пишите свой или юзаете мой шаблон, чтобы чат гпт нормально сгенерировал ответ и поменял ответ у текст выше
 description_for_chatGPT = '''Перепиши мой текст другими словами на английском языке, строго по шаблону #, без всяких дополнительный ответов, придумай другие критерии к оценке либо оставляй существующие, также можешь менять кол-во пунктов, чтобы не всегда их было 4, но чтобы было похоже что писал другой человек.'''
 
-
+#
 # КОНЕЦ НАСТРОЕК
-
-
+#
 
 
 asyncio.run(main(generate_random_reward_address, address_to_get_reward))
