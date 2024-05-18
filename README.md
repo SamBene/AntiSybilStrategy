@@ -8,7 +8,7 @@
 
 # ЗАПУСК:
 1. Установите python
-2. Установите зависимости: pip install -r requirements.txt
+  2. Установите зависимости: `pip install -r requirements.txt`
 3. Запустите скрипт командой: python main.py
 
 # НАСТРОЙКА:
