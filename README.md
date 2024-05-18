@@ -3,6 +3,7 @@
 ИНФО:
 
 Скрипт берет рандомно указанное кол-во адресов из бд брайана, далее с помощью чат гпт генерирует пруф того, что кошельки сибилы, по аналогии с вашим написанным текстом. После этого текст для репорта выводится в файл text_to_report.txt
+
 Далее копируете его, идете на страницу с репортом https://github.com/LayerZero-Labs/sybil-report/issues/new?assignees=LayerZero-GH&labels=under+review&projects=&template=sybil-report.md&title=%5BSybil+Report%5D и вставляете туда весь текст и жмете отправить.
 
 ЗАПУСК:
