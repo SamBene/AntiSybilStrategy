@@ -1,23 +1,17 @@
-import json
+import json, time
 import random
 import asyncio
 from g4f.client import Client
 from web3 import Web3
 
 def generate_ethereum_address():
-    # Создаем объект Web3 с подключением к локальной ноде Ethereum
-    w3 = Web3(Web3.WebsocketProvider('ws://localhost:8545'))  # Замените адрес и порт ноды при необходимости
-
-    # Генерируем случайный приватный ключ
+    w3 = Web3(Web3.WebsocketProvider('ws://localhost:8545'))  
     private_key = w3.eth.account.create().privateKey.hex()
-
-    # Получаем адрес из приватного ключа
     address = w3.eth.account.from_key(private_key).address
 
     return private_key, address
 
 def select_and_shuffle_elements(input_file, output_file, num_elements):
-    # Читаем входной JSON файл
     combined_data = []
     num_files = 7
     # Перебираем все файлы в указанной директории с заданным префиксом
@@ -27,14 +21,10 @@ def select_and_shuffle_elements(input_file, output_file, num_elements):
             data = json.load(file)
             combined_data.extend(data)
 
-    
-    # Выбираем случайное количество элементов
     selected_elements = random.sample(combined_data, num_elements)
-    
-    # Перемешиваем выбранные элементы
+
     random.shuffle(selected_elements)
     
-    # Записываем результат в выходной текстовый файл
     with open(output_file, 'w', encoding='utf-8') as file:
         for element in selected_elements:
             file.write(f"{element}\n")
@@ -50,14 +40,15 @@ def read_file_to_variable(file_path):
 client = Client()
 
 async def ask_gpt(content):
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": content}]
-    )
-    return response.choices[0].message.content
+    try:
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": content}]
+        )
+        return response.choices[0].message.content
+    except: return 0
 
 async def main(generate_random_reward_address, address_to_get_reward):
-    # Пример использования
     input_file = 'addresses_from_large_balances.json'
     output_file = 'addresses_to_report.txt'
     output_file_final = "text_to_report.txt"
@@ -72,7 +63,6 @@ async def main(generate_random_reward_address, address_to_get_reward):
         address_to_get_reward = ethereum_address
 
     text_to_propose_final = "$$$"+text_to_propose+"$$$"
-    #print(text_to_propose_final)
 
     print(f"\n{num_elements} случайных элементов записаны в файл {output_file}\n\n")
 
@@ -96,9 +86,10 @@ async def main(generate_random_reward_address, address_to_get_reward):
                 file.write(final_text)
             break
         except Exception as E:
-            print(E)
+            #print(E)
             pass
-
+    print("\n\nDONE!")
+    time.sleep(4)
 
 #
 # ИЗМЕНИТЕ ПОД ВАШИ НАСТРОЙКИ:
@@ -120,7 +111,7 @@ Wallets were created simultaneously on the Arbitrum network, funded with identic
 4. The final step is to determine the date of the last transaction on the Arbitrum network. If all wallets in the cluster have the same creation date, the same initial funding amount, the same number of transactions, and the same date of the last transaction, we obtain the final cluster.
 '''
 # Тут вы дополнительно пишите свой или юзаете мой шаблон, чтобы чат гпт нормально сгенерировал ответ и поменял ответ у текст выше
-description_for_chatGPT = '''Перепиши мой текст другими словами на английском языке, строго по шаблону #, без всяких дополнительный ответов, придумай другие критерии к оценке либо оставляй существующие, также можешь менять кол-во пунктов, чтобы не всегда их было 4, но чтобы было похоже что писал другой человек.'''
+description_for_chatGPT = '''Перепиши мой текст другими словами на английском языке, строго по шаблону #, без всяких дополнительный ответов, придумай другие критерии к оценке либо оставляй существующие, также можешь менять кол-во пунктов, чтобы не всегда их было четыре, но чтобы было похоже что писал другой человек.'''
 
 #
 # КОНЕЦ НАСТРОЕК
